@@ -31,6 +31,7 @@ popd
 cp -fr patch2/* .
 
 rm -fr patch2
+sed -i -e 's/openglwidget.h/OpenGLWidget.h/' src/MainDialogBase.ui
 
 %build
 
