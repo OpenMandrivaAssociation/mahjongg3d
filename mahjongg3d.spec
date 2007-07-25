@@ -1,6 +1,6 @@
 %define	name		mahjongg3d
 %define	version	0.96
-%define	release	1mdk
+%define	release	%mkrel 2
 
 Summary:	MahJongg 3D Solitaire
 Name:	%{name}
@@ -8,6 +8,7 @@ Version:	%{version}
 Release:	%{release}
 BuildRequires:	qt3-devel
 Source:	http://www.reto-schoelly.de/mahjongg3d/%{name}-%{version}.tar.bz2
+Source1: http://www.reto-schoelly.de/mahjongg3d/%{name}-0.96-patch2.tar.bz2
 Source10:	http://www.reto-schoelly.de/mahjongg3d/hieroglyph_tileset.tar.bz2
 Source11:	http://www.reto-schoelly.de/mahjongg3d/lab_layout.tar.bz2
 Source20: 	%{name}-16.png
@@ -16,27 +17,29 @@ Source22: 	%{name}-48.png
 Group:	Games/Boards
 License:	GPL
 URL:		http://www.reto-schoelly.de/mahjongg3d/
-BuildRoot:	%_tmppath/%{name}-build
 
 %description
-MahJongg 3D Solitaire
+MahJongg Solitaire 3D is an OpenGL enhanced solitaire version of the ancient chinese board game "Mah Jongg".
 
 %prep
-
-%setup -n mahjongg3d.release
+%setup -q -n mahjongg3d.release -a 1
 pushd bin
 tar xvjf %{SOURCE10}
 tar xvjf %{SOURCE11}
 popd
 
+cp -fr patch2/* .
+
+rm -fr patch2
+
 %build
 
-qmake
+%{qt3dir}/bin/qmake
 cat > src/gamedata_path.h <<EOF
 #define GAMEDATA_BASE_PATH "/usr/share/games/mahjongg3d"
 EOF
 
-%make PREFIX=/usr GAMEDATA_PREFIX=/usr/share/games
+%make PREFIX=%{_prefix} GAMEDATA_PREFIX=%_gamesdatadir
 
 %install
 install -d %buildroot%{_gamesdatadir}/%{name}/backgrounds
@@ -66,14 +69,16 @@ install -m 0644 %{name}.6 %buildroot%{_mandir}/man6/
 install -m 644 -D %{SOURCE20} $RPM_BUILD_ROOT/%{_miconsdir}/%{name}.png
 install -m 644 -D %{SOURCE21} $RPM_BUILD_ROOT/%{_iconsdir}/%{name}.png
 install -m 644 -D %{SOURCE22} $RPM_BUILD_ROOT/%{_liconsdir}/%{name}.png
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat > $RPM_BUILD_ROOT%{_menudir}/%{name} <<EOF
-?package(%{name}): needs="x11" \
- section="More Applications/Games/Boards" \
- title="%{summary}" \
- longtitle="%{summary} - A board game using OpenGL, with several themes" \
- command="%{_gamesbindir}/%{name}" \
- icon="%{name}.png"
+
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
+[Desktop Entry]
+Name=MahJongg 3D Solitaire
+Comment=MahJongg 3D Solitaire - A board game using OpenGL, with several themes
+Exec=%{_gamesbindir}/%{name}
+Icon=%{name}
+Type=Application
+Categories=Qt;Game;BoardGame;
 EOF
 
 %files
@@ -82,7 +87,7 @@ EOF
 %attr(0755,root,games) %{_gamesbindir}/%{name}
 %{_mandir}/man6/%{name}.6*
 %{_gamesdatadir}/%{name}
-%{_menudir}/%{name}
+%{_datadir}/applications/*.desktop
 %{_miconsdir}/%{name}.png
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
