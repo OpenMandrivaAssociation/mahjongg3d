@@ -17,6 +17,7 @@ Source22: 	%{name}-48.png
 Group:	Games/Boards
 License:	GPL
 URL:		http://www.reto-schoelly.de/mahjongg3d/
+ExclusiveArch:	%{ix86}
 
 %description
 MahJongg Solitaire 3D is an OpenGL enhanced solitaire version of the ancient chinese board game "Mah Jongg".
