@@ -20,7 +20,8 @@ URL:		http://www.reto-schoelly.de/mahjongg3d/
 ExclusiveArch:	%{ix86}
 
 %description
-MahJongg Solitaire 3D is an OpenGL enhanced solitaire version of the ancient chinese board game "Mah Jongg".
+MahJongg Solitaire 3D is an OpenGL enhanced solitaire version of the ancient
+chinese board game "Mah Jongg".
 
 %prep
 %setup -q -n mahjongg3d.release -a 1
