@@ -15,6 +15,7 @@ Source20: 	%{name}-16.png
 Source21: 	%{name}-32.png
 Source22: 	%{name}-48.png
 Group:	Games/Boards
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 License:	GPL
 URL:		http://www.reto-schoelly.de/mahjongg3d/
 ExclusiveArch:	%{ix86}
