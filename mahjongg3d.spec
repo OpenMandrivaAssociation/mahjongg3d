@@ -1,6 +1,6 @@
 %define	name		mahjongg3d
 %define	version	0.96
-%define	release	%mkrel 3
+%define	release	%mkrel 5
 
 Summary:	MahJongg 3D Solitaire
 Name:	%{name}
