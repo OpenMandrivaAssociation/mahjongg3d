@@ -1,24 +1,22 @@
-%define	name		mahjongg3d
-%define	version	0.96
-%define	release	%mkrel 5
+Name:			mahjongg3d
+Version:		0.96
+Release:		%mkrel 6
 
 Summary:	MahJongg 3D Solitaire
-Name:	%{name}
-Version:	%{version}
-Release:	%{release}
-BuildRequires:	qt3-devel
-Source:	http://www.reto-schoelly.de/mahjongg3d/%{name}-%{version}.tar.bz2
-Source1: http://www.reto-schoelly.de/mahjongg3d/%{name}-0.96-patch2.tar.bz2
+License:        GPLv2+
+Group:		Games/Boards
+URL:            http://www.reto-schoelly.de/mahjongg3d/
+Source:		http://www.reto-schoelly.de/mahjongg3d/%{name}-%{version}.tar.bz2
+Source1:	http://www.reto-schoelly.de/mahjongg3d/%{name}-0.96-patch2.tar.bz2
 Source10:	http://www.reto-schoelly.de/mahjongg3d/hieroglyph_tileset.tar.bz2
 Source11:	http://www.reto-schoelly.de/mahjongg3d/lab_layout.tar.bz2
-Source20: 	%{name}-16.png
-Source21: 	%{name}-32.png
-Source22: 	%{name}-48.png
-Group:	Games/Boards
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-License:	GPL
-URL:		http://www.reto-schoelly.de/mahjongg3d/
-ExclusiveArch:	%{ix86}
+Source20:	%{name}-16.png
+Source21:	%{name}-32.png
+Source22:	%{name}-48.png
+Patch:		mahjongg3d-0.96-mdv-64bit-fix.patch
+
+BuildRequires:	qt3-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 MahJongg Solitaire 3D is an OpenGL enhanced solitaire version of the ancient
@@ -26,19 +24,21 @@ chinese board game "Mah Jongg".
 
 %prep
 %setup -q -n mahjongg3d.release -a 1
+%patch -p1 -b .build+x64-fix
+
 pushd bin
 tar xvjf %{SOURCE10}
 tar xvjf %{SOURCE11}
 popd
 
 cp -fr patch2/* .
-
 rm -fr patch2
 sed -i -e 's/openglwidget.h/OpenGLWidget.h/' src/MainDialogBase.ui
 
 %build
-
+export QTDIR=%{qt3dir}
 %{qt3dir}/bin/qmake
+%{qt3dir}/bin/qmake src/src.pro -o src/Makefile
 cat > src/gamedata_path.h <<EOF
 #define GAMEDATA_BASE_PATH "/usr/share/games/mahjongg3d"
 EOF
@@ -46,6 +46,7 @@ EOF
 %make PREFIX=%{_prefix} GAMEDATA_PREFIX=%_gamesdatadir
 
 %install
+rm -rf %buildroot
 install -d %buildroot%{_gamesdatadir}/%{name}/backgrounds
 install -d %buildroot%{_gamesdatadir}/%{name}/gra
 install -d %buildroot%{_gamesdatadir}/%{name}/layouts
@@ -82,7 +83,7 @@ Comment=MahJongg 3D Solitaire - A board game using OpenGL, with several themes
 Exec=%{_gamesbindir}/%{name}
 Icon=%{name}
 Type=Application
-Categories=Qt;Game;BoardGame;
+Categories=X-MandrivaLinux-MoreApplications-Games-Boards;Game;BoardGame;Qt;
 EOF
 
 %files
@@ -97,14 +98,12 @@ EOF
 %{_liconsdir}/%{name}.png
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %buildroot
 
 %if %mdkversion < 200900
 %post
 %{update_menus}
-%endif
 
-%if %mdkversion < 200900
 %postun
 %{clean_menus}
 %endif
