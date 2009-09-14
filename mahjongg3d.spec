@@ -1,6 +1,6 @@
 Name:			mahjongg3d
 Version:		0.96
-Release:		%mkrel 6
+Release:		%mkrel 7
 
 Summary:	MahJongg 3D Solitaire
 License:        GPLv2+
