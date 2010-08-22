@@ -1,11 +1,11 @@
 Name:			mahjongg3d
 Version:		0.96
-Release:		%mkrel 7
+Release:		%mkrel 8
 
 Summary:	MahJongg 3D Solitaire
-License:        GPLv2+
+License:	GPLv2+
 Group:		Games/Boards
-URL:            http://www.reto-schoelly.de/mahjongg3d/
+URL:		http://www.reto-schoelly.de/mahjongg3d/
 Source:		http://www.reto-schoelly.de/mahjongg3d/%{name}-%{version}.tar.bz2
 Source1:	http://www.reto-schoelly.de/mahjongg3d/%{name}-0.96-patch2.tar.bz2
 Source10:	http://www.reto-schoelly.de/mahjongg3d/hieroglyph_tileset.tar.bz2
