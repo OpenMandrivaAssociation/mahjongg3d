@@ -1,0 +1,126 @@
+--- mahjongg3d/src/cbitmapfile.cpp	2008-11-08 17:47:57.000000000 +0100
++++ mahjongg3d.release/src/cbitmapfile.cpp	2008-11-08 17:49:52.000000000 +0100
+@@ -43,7 +43,7 @@
+ int CBitmapFile::LoadBMP(char *filename)
+ {
+ 	FILE *file;
+-	unsigned long size;                 // Size of the image in bytes.
++	unsigned int size;                  // Size of the image in bytes
+ 	unsigned long i;                    
+ 	unsigned short int planes;          // Number of planes in bitmap
+ 	unsigned short int bpp;             // Num of bits per pixel
+--- mahjongg3d/src/MainDialogBase.ui	2008-11-08 18:08:31.000000000 +0100
++++ mahjongg3d.release/src/MainDialogBase.ui	2008-11-08 18:09:18.000000000 +0100
+@@ -137,6 +137,5 @@
+ <layoutdefaults spacing="6" margin="11"/>
+ <includehints>
+     <includehint>menubar.h</includehint>
+-    <includehint>openglwidget.h</includehint>
+ </includehints>
+ </UI>
+ 
+--- mahjongg3d/src/environmentgl.h      2008-11-08 17:48:42.000000000 +0100
++++ mahjongg3d.release/src/environmentgl.h      2008-11-08 17:49:53.000000000 +0100
+@@ -64,6 +64,7 @@
+     char *env_name;
+     
+     face *face_list_head;
++    void helper(char*, const char*, ...);
+ };
+ 
+ #endif
+--- mahjongg3d/src/environmentgl.cpp	2008-11-08 18:37:41.000000000 +0100
++++ mahjongg3d.release/src/environmentgl.cpp	2008-11-08 18:39:29.000000000 +0100
+@@ -24,11 +24,20 @@
+ #include "stdlib.h"
+ #include "stdio.h"
+ #include "string.h"
++#include "stdarg.h"
+ 
+ #include "GL/gl.h"
+ 
+ #define ENV_STR_LEN 50
+ 
++void EnvironmentGL::helper(char* str, const char* fmt, ...)
++{
++	va_list args;
++	va_start(args, fmt);
++	vsprintf(str, fmt, args);
++	va_end(args);
++}
++
+ EnvironmentGL::EnvironmentGL(const char *filename)
+ {
+     face_list_head = NULL;
+@@ -67,7 +76,7 @@
+ 			fgets(env_name, ENV_STR_LEN, file);
+ 			fgets(str, ENV_STR_LEN, file);
+ 			memset(str, ENV_STR_LEN, '\0');
+-			vsprintf(str, "%d", (char *)&num_faces);
++			helper(str, "%d", num_faces);
+ 			fgets(str, ENV_STR_LEN, file);
+ 			
+ 			for(n = 0; n < num_faces; n++)
+@@ -90,7 +99,7 @@
+ 		{
+ 			memset(str, ENV_STR_LEN, '\0');
+ 			fgets(str, ENV_STR_LEN, file);
+-			vsprintf(str, "%d", (char *)&num_of_face);
++			helper(str, "%d", num_of_face);
+ 			
+ 			list = face_list_head;
+ 			
+@@ -101,7 +110,7 @@
+ 			
+ 			memset(str, ENV_STR_LEN, '\0');
+ 			fgets(str, ENV_STR_LEN, file);
+-			vsprintf(str, "%d", (char *)&list->num_triangles);
++			helper(str, "%d", list->num_triangles);
+ 			list->triangles = (triangle *)malloc(sizeof(triangle)*list->num_triangles);
+ 			
+ 			list->texture_filename = (char *)malloc(ENV_STR_LEN);
+@@ -111,10 +120,10 @@
+ 			
+ 			memset(str, ENV_STR_LEN, '\0');
+ 			fgets(str, ENV_STR_LEN, file);
+-			vsprintf(str, "%d", (char *)&list->texture_width);
++			helper(str, "%d", list->texture_width);
+ 			memset(str, ENV_STR_LEN, '\0');
+ 			fgets(str, ENV_STR_LEN, file);
+-			vsprintf(str, "%d", (char *)&list->texture_height);
++			helper(str, "%d",  list->texture_height);
+ 			
+ 			fgets(str, ENV_STR_LEN, file);
+ 			
+@@ -123,25 +132,25 @@
+ 			{
+ 				memset(str, ENV_STR_LEN, '\0');
+ 				fgets(str, ENV_STR_LEN, file);
+-				vsprintf(str, "%f", (char *)&tri->vertices[0]);
++				helper(str, "%f", tri->vertices[0]);
+ 				memset(str, ENV_STR_LEN, '\0');
+ 				fgets(str, ENV_STR_LEN, file);
+-				vsprintf(str, "%f", (char *)&tri->vertices[1]);
++				helper(str, "%f", tri->vertices[1]);
+ 				memset(str, ENV_STR_LEN, '\0');
+ 				fgets(str, ENV_STR_LEN, file);
+-				vsprintf(str, "%f", (char *)&tri->vertices[2]);
++				helper(str, "%f", tri->vertices[2]);
+ 				
+ 				fgets(str, ENV_STR_LEN, file);
+ 				
+ 				memset(str, ENV_STR_LEN, '\0');
+ 				fgets(str, ENV_STR_LEN, file);
+-				vsprintf(str, "%f", (char *)&tri->normal[0]);
++				helper(str, "%f", tri->normal[0]);
+ 				memset(str, ENV_STR_LEN, '\0');
+ 				fgets(str, ENV_STR_LEN, file);
+-				vsprintf(str, "%f", (char *)&tri->normal[1]);
++				helper(str, "%f", tri->normal[1]);
+ 				memset(str, ENV_STR_LEN, '\0');
+ 				fgets(str, ENV_STR_LEN, file);
+-				vsprintf(str, "%f", (char *)&tri->normal[2]);
++				helper(str, "%f", tri->normal[2]);
+ 			
+ 				fgets(str, ENV_STR_LEN, file);
+ 				
