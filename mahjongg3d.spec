@@ -1,6 +1,6 @@
 Name:			mahjongg3d
 Version:		0.96
-Release:		%mkrel 8
+Release:		9
 
 Summary:	MahJongg 3D Solitaire
 License:	GPLv2+
@@ -16,7 +16,7 @@ Source22:	%{name}-48.png
 Patch:		mahjongg3d-0.96-mdv-64bit-fix.patch
 
 BuildRequires:	qt3-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}
+BuildRequires:	pkgconfig(glu)
 
 %description
 MahJongg Solitaire 3D is an OpenGL enhanced solitaire version of the ancient
@@ -87,7 +87,6 @@ Categories=X-MandrivaLinux-MoreApplications-Games-Boards;Game;BoardGame;Qt;
 EOF
 
 %files
-%defattr(-,root,root)
 %doc Changelog COPYING INSTALL_CUSTOM README
 %attr(0755,root,games) %{_gamesbindir}/%{name}
 %{_mandir}/man6/%{name}.6*
@@ -97,13 +96,40 @@ EOF
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 
-%clean
-rm -rf %buildroot
+%changelog
+* Sun Aug 22 2010 Tomas Kindl <supp@mandriva.org> 0.96-8mdv2011.0
++ Revision: 572034
+- rebuild & minor spec cleanup
 
-%if %mdkversion < 200900
-%post
-%{update_menus}
+* Mon Sep 14 2009 Thierry Vignaud <tv@mandriva.org> 0.96-7mdv2010.0
++ Revision: 439699
+- rebuild
 
-%postun
-%{clean_menus}
-%endif
+* Tue Jan 27 2009 Guillaume Bedot <littletux@mandriva.org> 0.96-6mdv2009.1
++ Revision: 334255
+- Fix license, build on x32 and x64 and x64 segfault
+
+* Mon Jul 28 2008 Thierry Vignaud <tv@mandriva.org> 0.96-5mdv2009.0
++ Revision: 251684
+- rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - rpm filetriggers deprecates update_menus/update_scrollkeeper/update_mime_database/update_icon_cache/update_desktop_database/post_install_gconf_schemas
+
+* Thu Feb 14 2008 Thierry Vignaud <tv@mandriva.org> 0.96-3mdv2008.1
++ Revision: 168061
+- fix no-buildroot-tag
+- fix description-line-too-long
+
+* Thu Jul 26 2007 Funda Wang <fwang@mandriva.org> 0.96-3mdv2008.0
++ Revision: 55742
+- ExclusiveArch ix86
+- fix wrong include instruction
+- Add upsteam patch
+- use xdg menu entry
+- Import mahjongg3d
+
+
+
+* Mon Mar 07 2005 Guillaume Bedot <guillaume.bedot@cegetel.net> 0.96-1mdk
+- First Mandrakelinux package.

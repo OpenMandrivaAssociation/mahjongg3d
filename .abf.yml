@@ -1,8 +1,5 @@
 sources:
-  "hieroglyph_tileset.tar.bz2:"	5cf8771d9bc274cd6a2dc0e80858b0186912a84a
-  "lab_layout.tar.bz2:"	2f9f4090123e062c326cc2310419509c70f8f9e1
-  "mahjongg3d-0.96-patch2.tar.bz2:"	791dd0de424399a9d4cfde82fae0400351ab6926
-  "mahjongg3d-0.96.tar.bz2:"	c2de45f5fa8f51c15fff9e267cecdba837c80a42
-  "mahjongg3d-16.png:"	796ca1a8ebecda5e10d57664eb96118c7582feef
-  "mahjongg3d-32.png:"	1d423af1c791de9b3bd1db9c6a6ee4539ee8d3ad
-  "mahjongg3d-48.png:"	0d6ada2440ee81fd0edf199f9da10cb9f7126c3f
+  "hieroglyph_tileset.tar.bz2": 5cf8771d9bc274cd6a2dc0e80858b0186912a84a
+  "lab_layout.tar.bz2": 2f9f4090123e062c326cc2310419509c70f8f9e1
+  "mahjongg3d-0.96-patch2.tar.bz2": 791dd0de424399a9d4cfde82fae0400351ab6926
+  "mahjongg3d-0.96.tar.bz2": c2de45f5fa8f51c15fff9e267cecdba837c80a42
