@@ -15,6 +15,7 @@ Source21:	%{name}-32.png
 Source22:	%{name}-48.png
 Patch:		mahjongg3d-0.96-mdv-64bit-fix.patch
 
+BuildRequires:	make
 BuildRequires:	qt3-devel
 BuildRequires:	pkgconfig(glu)
 
